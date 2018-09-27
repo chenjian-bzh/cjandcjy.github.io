@@ -1,0 +1,600 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>使用jquery easyui datagrid和pageHelper插件实现分页详解 | xiao jian</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiao jian">
+    
+    <meta name="description" content="背景由于项目原因，用了jquery easyui, 感觉界面不错，在项目中使用datagrid 和 mybatis的pageHelper插件实现表格的分页显示，，下面先介绍一下jquery easyui datagrid和pageHelper插件的使用
+数据网格（datagrid）以表格格式显示数据">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="xiao jian" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="xiao jian" title="xiao jian"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="xiao jian">xiao jian</a></h1>
+				<a class="blog-motto">尘世间一只迷途的小蚂农</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="Search"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/06/26/使用jquery-easyui-datagrid和pageHelper插件实现分页详解/" title="使用jquery easyui datagrid和pageHelper插件实现分页详解" itemprop="url">使用jquery easyui datagrid和pageHelper插件实现分页详解</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://daiguahub.com" title="xiao jian">xiao jian</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-06-26T09:52:55.000Z" itemprop="datePublished">2016-06-26</time>
+    Updated:<time datetime="2016-07-26T13:31:48.450Z" itemprop="dateModified">2016-07-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据网格（datagrid）以表格格式显示数据"><span class="toc-number">1.1.</span> <span class="toc-text">数据网格（datagrid）以表格格式显示数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器端代码"><span class="toc-number">1.2.</span> <span class="toc-text">服务器端代码</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>由于项目原因，用了jquery easyui, 感觉界面不错，在项目中使用datagrid 和 mybatis的pageHelper插件实现表格的分页显示，，下面先介绍一下jquery easyui datagrid和pageHelper插件的使用</p>
+<h3 id="数据网格（datagrid）以表格格式显示数据"><a href="#数据网格（datagrid）以表格格式显示数据" class="headerlink" title="数据网格（datagrid）以表格格式显示数据"></a>数据网格（datagrid）以表格格式显示数据</h3><p>它为选择、排序、分组和编辑数据提供了丰富的支持。数据网格（datagrid）的设计目的是为了减少开发时间，且不要求开发人员具备指定的知识。它是轻量级的，但是功能丰富。它的特性包括单元格合并，多列页眉，冻结列和页脚，等等。 datagrid分页 有一个附加的分页控件，只需后台获取分页控件自动提交的两个参数rows每页显示的记录数和page;//当前第几页<br>然后读取相应页数的记录，和总记录数total一块返回即可。 可以通过 <code>.datagrid(&#39;getPager&#39;)</code>方法获得这个隐藏的分页控件，设置想要的参数,如下代码所示：</p>
+<pre><code>$(document).ready(function(){
+
+    //从服务器加载数据，并提交两个隐藏的参数page和rows，在后台可以通过request获取到
+    $(&apos;#basicdata&apos;).datagrid(&apos;load&apos;,url=&quot;${pageContext.request.contextPath}/basicdata&quot;);
+
+    //设置分页控件 
+    var p = $(&apos;#basicdata&apos;).datagrid(&apos;getPager&apos;); 
+    $(p).pagination({ 
+        pageSize: 10,//每页显示的记录条数，默认为10 
+        pageList: [5,10,15],//可以设置每页记录条数的列表 
+        beforePageText: &apos;第&apos;,//页数文本框前显示的汉字 
+        afterPageText: &apos;页    共 {pages} 页&apos;, 
+        displayMsg: &apos;当前显示 {from} - {to} 条记录   共 {total} 条记录&apos;, 
+        /*onBeforeRefresh:function(){
+            $(this).pagination(&apos;loading&apos;);
+            alert(&apos;before refresh&apos;);
+            $(this).pagination(&apos;loaded&apos;);
+        }*/ 
+    });
+</code></pre><p>分页控件中的pageSize的值即为传给服务器的rows的值，可以通过改变这个值控制表格一页显示的数据行数。下边是datagrid的显示对话框，直接用table把列头显示出来，感觉比用js写要易于阅读。</p>
+<pre><code>&lt;table id =&quot;basicdata&quot; title = &quot;Basic data&quot; class = &quot;easyui-datagrid&quot; style=&quot;height:800px;&quot; fitColumns = &quot;true&quot; 
+    pagination=&quot;true&quot; rownumbers = &quot;true&quot;  url=&quot;${pageContext.request.contextPath}/basicdata&quot; fit=&quot;true&quot; toolbar=&quot;#toolbar&quot;&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th field = &quot;CB&quot; checkbox = &quot;true&quot; &gt;&lt;/th&gt;
+                &lt;th field = &quot;busid&quot; width = &quot;9&quot; &gt;车辆ID&lt;/th&gt;
+                &lt;th field = &quot;busline&quot; width = &quot;7&quot; &gt;公车线路&lt;/th&gt;
+                &lt;th field = &quot;bustem&quot; width = &quot;6&quot; &gt;温度&lt;/th&gt;
+                &lt;th field = &quot;bushumidity&quot; width = &quot;7&quot; &gt;湿度&lt;/th&gt;
+                &lt;th field = &quot;busspeed&quot; width = &quot;6&quot; &gt;速度&lt;/th&gt;                
+                &lt;th field = &quot;buslight&quot; width = &quot;6&quot; &gt;光照&lt;/th&gt;
+                &lt;th field = &quot;busdate&quot; width = &quot;10&quot; &gt;日期&lt;/th&gt;
+                &lt;th field = &quot;bustime&quot; width = &quot;10&quot; &gt;时间&lt;/th&gt;
+                &lt;th field = &quot;ref&quot; width = &quot;10&quot; &gt;车内人数&lt;/th&gt;
+                &lt;th field = &quot;temquality&quot; width = &quot;10&quot; &gt;气温舒适度&lt;/th&gt;        
+                &lt;th field = &quot;airquality&quot; width = &quot;10&quot; &gt;车内环境等级&lt;/th&gt;                              
+                &lt;th field = &quot;recommend&quot; width = &quot;10&quot; &gt;推荐指数&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+&lt;/table&gt;
+</code></pre><p>需要注意的是如果在后台中使用HttpMessageConverter消息转换器将返回的Map类型的数据转换转换为json格式的数据后，所有属性的名称都会转变为小写的，</p>
+<p>下面这部分是服务器端的pojo代码：</p>
+<pre><code>public class BasicBusinfoDto {
+
+    private String BUSID;
+    private String BUSLINE;
+    private Double BUSTEM;
+    private Double BUSHUMIDITY;
+    private String BUSSPEED;
+    private String BUSLIGHT;
+    private String BUSDATE;
+    private String BUSTIME;
+    private Integer REF;
+    private Integer TEMQUALITY;
+    private Integer AIRQUALITY;
+    private Integer RECOMMEND;
+</code></pre><p>在这个busdata的pojo中所有属性都是大写的，下面看浏览器收到的数据</p>
+<p><img src="/img/f.jpg" alt="asda"></p>
+<p>而这张图可以看出来，所有属性名称都变成了小写，相应的在datagrid声明的时候所有field都要是小写的，否则数据显示不出来。</p>
+<h3 id="服务器端代码"><a href="#服务器端代码" class="headerlink" title="服务器端代码"></a>服务器端代码</h3><p>要使用pageHelper插件需要在pom.xml中引入jar包</p>
+   <!-- 分页插件 -->
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;
+    &lt;artifactId&gt;pagehelper&lt;/artifactId&gt;
+    &lt;version&gt;4.1.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p>然后在spring配置文件中集成</p>
+<pre><code>&lt;!--Spring Mybatis整合--&gt;
+    &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+        &lt;!--&lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:mapper/*.xml&quot;/&gt;--&gt;
+        &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis/config.xml&quot;/&gt;
+        &lt;property name=&quot;typeAliasesPackage&quot; value=&quot;com.web.domain&quot;/&gt;
+        &lt;property name=&quot;plugins&quot;&gt;
+            &lt;array&gt;
+                &lt;bean class=&quot;com.github.pagehelper.PageHelper&quot;&gt;
+                    &lt;property name=&quot;properties&quot;&gt;
+                        &lt;value&gt;
+                            reasonable=true
+                        &lt;/value&gt;
+                    &lt;/property&gt;
+                &lt;/bean&gt;
+            &lt;/array&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+</code></pre><p>控制器中代码如下：</p>
+<pre><code>@RequestMapping(method=RequestMethod.POST)
+    @ResponseBody
+    public Map&lt;String, Object&gt; loadData(HttpServletRequest req){
+        //要查询的页码（data-grid表格会自动提交 page 和 rows 属性）
+        String page = req.getParameter(&quot;page&quot;);
+        String rows = req.getParameter(&quot;rows&quot;);
+        int pageNum = Integer.parseInt(page);
+        int pageSize = Integer.parseInt(rows);
+        //查询分页数据
+          //开启分页
+        PageHelper.startPage(pageNum, pageSize);
+        List&lt;BasicBusinfo&gt; list = basicdataservice.getBusDataByPage();
+        //将查询结果list转化为需要的list
+        List&lt;BasicBusinfoDto&gt; newlist = BusDataUtil.change(list);
+        //创建需要返回的map对象
+        Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
+        map.put(&quot;total&quot;, basicdataservice.count());
+        map.put(&quot;rows&quot;, newlist);
+        return map;
+    }
+</code></pre><p><code>PageHelper.startPage(pageNum, pageSize);</code>的下一句将采用分页方式对数据库进行操作</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mybatis/">mybatis</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/项目小结/">项目小结</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://daiguahub.com/2016/06/26/使用jquery-easyui-datagrid和pageHelper插件实现分页详解/" data-title="使用jquery easyui datagrid和pageHelper插件实现分页详解 | xiao jian" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/06/27/编写js脚本操作mongodb数据库/" title="编写js脚本操作mongodb数据库">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  编写js脚本操作mongodb数据库</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/06/24/spring使用过程中遇到的错误/"  title="spring使用过程中遇到的错误">
+ <strong>NEXT:</strong><br/> 
+ <span>spring使用过程中遇到的错误
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="使用jquery easyui datagrid和pageHelper插件实现分页详解" data-thread-key="使用jquery-easyui-datagrid和pageHelper插件实现分页详解" data-author-key="xiao jian" data-url="http://daiguahub.com/post/使用jquery-easyui-datagrid和pageHelper插件实现分页详解"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据网格（datagrid）以表格格式显示数据"><span class="toc-number">1.1.</span> <span class="toc-text">数据网格（datagrid）以表格格式显示数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器端代码"><span class="toc-number">1.2.</span> <span class="toc-text">服务器端代码</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		<a href="http://weibo.com/2881468100" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/cjandcjy" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/J2EE/" title="J2EE">J2EE<sup>3</sup></a></li>
+		
+			<li><a href="/categories/JVM/" title="JVM">JVM<sup>7</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+		
+			<li><a href="/categories/http/" title="http">http<sup>2</sup></a></li>
+		
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>2</sup></a></li>
+		
+			<li><a href="/categories/java基础/" title="java基础">java基础<sup>3</sup></a></li>
+		
+			<li><a href="/categories/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/categories/mongodb/" title="mongodb">mongodb<sup>3</sup></a></li>
+		
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/categories/错误小结/" title="错误小结">错误小结<sup>3</sup></a></li>
+		
+			<li><a href="/categories/项目小结/" title="项目小结">项目小结<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongodb/" title="mongodb">mongodb<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mongodb-javascript-css/" title="mongodb javascript css">mongodb javascript css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongoDB/" style="font-size: 10px;">mongoDB</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/mongodb-javascript-css/" style="font-size: 10px;">mongodb javascript css</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="http://daiguahub.com" target="_blank" title="xiao jian">xiao jian</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jianbaobao"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '5';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

@@ -1,0 +1,608 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>MIME类型及其在Spring MVC中的处理 | xiao jian</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiao jian">
+    
+    <meta name="description" content="HTTP消息头中的MIME类型MediaType，即是Internet Media Type，互联网媒体类型；也叫做MIME类型，在Http协议消息头中，使用Content-Type来表示具体请求中的媒体类型信息。    类型格式：type/subtype(;parameter)? type    ">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="xiao jian" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="xiao jian" title="xiao jian"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="xiao jian">xiao jian</a></h1>
+				<a class="blog-motto">尘世间一只迷途的小蚂农</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="Search"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/06/24/MIME类型及其在Spring-MVC中的处理/" title="MIME类型及其在Spring MVC中的处理" itemprop="url">MIME类型及其在Spring MVC中的处理</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://daiguahub.com" title="xiao jian">xiao jian</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-06-24T06:51:59.000Z" itemprop="datePublished">2016-06-24</time>
+    Updated:<time datetime="2016-06-25T12:07:12.478Z" itemprop="dateModified">2016-06-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP消息头中的MIME类型"><span class="toc-number">1.</span> <span class="toc-text">HTTP消息头中的MIME类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request部分"><span class="toc-number">2.</span> <span class="toc-text">Request部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC返回json数据的方法"><span class="toc-number">3.</span> <span class="toc-text">Spring MVC返回json数据的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-response直接写回"><span class="toc-number">3.1.</span> <span class="toc-text">1.response直接写回</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-引入jackson包"><span class="toc-number">3.2.</span> <span class="toc-text">2.引入jackson包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HttpMessageConverter消息转换器简介"><span class="toc-number">4.</span> <span class="toc-text">HttpMessageConverter消息转换器简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HttpMessageConverter请求信息转换器执行流程"><span class="toc-number">4.1.</span> <span class="toc-text">HttpMessageConverter请求信息转换器执行流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整示例"><span class="toc-number">5.</span> <span class="toc-text">完整示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端Ajax请求："><span class="toc-number">5.1.</span> <span class="toc-text">客户端Ajax请求：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器代码："><span class="toc-number">5.2.</span> <span class="toc-text">服务器代码：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我是分割线"><span class="toc-number">6.</span> <span class="toc-text">我是分割线</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#JSON-parse-和JSON-stringify"><span class="toc-number">6.0.0.0.1.</span> <span class="toc-text">JSON.parse()和JSON.stringify</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+		</div>
+		
+		<h2 id="HTTP消息头中的MIME类型"><a href="#HTTP消息头中的MIME类型" class="headerlink" title="HTTP消息头中的MIME类型"></a>HTTP消息头中的MIME类型</h2><p>MediaType，即是Internet Media Type，互联网媒体类型；也叫做MIME类型，在Http协议消息头中，使用Content-Type来表示具体请求中的媒体类型信息。<br>    类型格式：type/subtype(;parameter)? type<br>    type ：主类型，任意的字符串，如text，如果是<em>号代表所有；<br>    subtype： 子类型，任意的字符串，如html，如果是</em>号代表所有；<br>    parameter： 可选，一些参数，如Accept请求头的q参数， Content-Type的 charset参数。</p>
+<p>例如： Content-Type: text/html;charset:utf-8;</p>
+<p>常见的媒体格式类型如下：</p>
+<pre><code>text/html ： HTML格式
+text/plain ：纯文本格式      
+text/xml ：  XML格式
+image/gif ：gif图片格式    
+image/jpeg ：jpg图片格式 
+image/png：png图片格式
+</code></pre><p>以application开头的媒体格式类型：</p>
+<pre><code>application/xhtml+xml ：XHTML格式
+application/xml     ： XML数据格式
+application/atom+xml  ：Atom XML聚合格式    
+application/json    ： JSON数据格式
+application/pdf       ：pdf格式  
+application/msword  ： Word文档格式
+application/octet-stream ： 二进制流数据（如常见的文件下载）
+application/x-www-form-urlencoded ： &lt;form encType=””&gt;中默认的encType，form表单数据被编码为key/value格式发送到服务器（表单默认的提交数据的格式）
+</code></pre><p>另外一种常见的媒体格式是上传文件之时使用的：</p>
+<pre><code>multipart/form-data ： 需要在表单中进行文件上传时，就需要使用该格式
+</code></pre><p>以上就是我们在日常的开发中，经常会用到的若干content-type的内容格式。</p>
+<h2 id="Request部分"><a href="#Request部分" class="headerlink" title="Request部分"></a>Request部分</h2><p>HTTP请求头中的content-type指定了请求体中的内容格式，比如”contentType:’application/json;charset=UTF-8’“表示发送的是json格式的数据，服务器根据这个请求头就可以知道如何处理请求数据; Accept请求头指定客户端希望服务端返回的mime类型，比如”Accept：application/json”表示客户端只接受json类型的数据；</p>
+<p>示例：</p>
+<pre><code>[html] view plain copy 在CODE上查看代码片派生到我的代码片
+@RequestMapping(value = &quot;/response/ContentType&quot;, headers = &quot;Accept=application/json&quot;)    
+public void response2(HttpServletResponse response) throws IOException {    
+    //表示响应的内容区数据的媒体类型为json格式，且编码为utf-8(客户端应该以utf-8解码)    
+    response.setContentType(&quot;application/json;charset=utf-8&quot;);    
+    //写出响应体内容    
+    String jsonData = &quot;{\&quot;username\&quot;:\&quot;zhang\&quot;, \&quot;password\&quot;:\&quot;123\&quot;}&quot;;    
+    response.getWriter().write(jsonData);    
+}
+</code></pre><p>服务器根据请求头“Accept=application/json”生产json数据。当你有如下Accept头，将遵守如下规则进行应用：</p>
+<p>①Accept：text/html,application/xml,application/json<br>      将按照如下顺序进行produces的匹配 ①text/html ②application/xml ③application/json<br>②Accept：application/xml;q=0.5,application/json;q=0.9,text/html<br>      将按照如下顺序进行produces的匹配 ①text/html ②application/json ③application/xml<br>      参数为媒体类型的质量因子，越大则优先权越高(从0到1)<br>③Accept：<em>/</em>,text/<em>,text/html<br>      将按照如下顺序进行produces的匹配 ①text/html ②text/</em> ③<em>/</em></p>
+<p>即匹配规则为：最明确的优先匹配。</p>
+<h2 id="Spring-MVC返回json数据的方法"><a href="#Spring-MVC返回json数据的方法" class="headerlink" title="Spring MVC返回json数据的方法"></a>Spring MVC返回json数据的方法</h2><h3 id="1-response直接写回"><a href="#1-response直接写回" class="headerlink" title="1.response直接写回"></a>1.response直接写回</h3><p>@RequestMapping(value = “/response/ContentType”, headers = “Accept=application/json”)<br>public void response2(HttpServletResponse response) throws IOException {<br>    //表示响应的内容区数据的媒体类型为json格式，且编码为utf-8(客户端应该以utf-8解码)<br>    response.setContentType(“application/json;charset=utf-8”);<br>    //写出响应体内容<br>    String jsonData = “{\”username\”:\”zhang\”, \”password\”:\”123\”}”;<br>    response.getWriter().write(jsonData);<br>}    </p>
+<h3 id="2-引入jackson包"><a href="#2-引入jackson包" class="headerlink" title="2.引入jackson包"></a>2.引入jackson包</h3><p>在方法名前面增加@ResponseBody注解。如果Spring发现项目lib库中含有Jackson包，Spring启用了 mvc:annotation-driven MVC注解配置，返回的方法使用了@ResponseBody注解，同时spring-mvc.xml文件中声明了HttpMessageConverter消息转换器，Spring 会自动进行JSON的转换。</p>
+<pre><code>&lt;!-- 用于将对象转换为 JSON  --&gt;  
+    &lt;bean id=&quot;stringConverter&quot; class=&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;&gt;  
+        &lt;property name=&quot;supportedMediaTypes&quot;&gt;  
+            &lt;list&gt;  
+                &lt;value&gt;text/plain;charset=UTF-8&lt;/value&gt;  
+            &lt;/list&gt;  
+        &lt;/property&gt;  
+    &lt;/bean&gt; 
+
+    &lt;bean id=&quot;jsonConverter&quot; class=&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;&gt;&lt;/bean&gt;  
+
+    &lt;bean  
+        class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;  
+        &lt;property name=&quot;messageConverters&quot;&gt;  
+            &lt;list&gt;  
+                &lt;ref bean=&quot;stringConverter&quot; /&gt;  
+                &lt;ref bean=&quot;jsonConverter&quot; /&gt;  
+            &lt;/list&gt;  
+        &lt;/property&gt;  
+    &lt;/bean&gt; 
+</code></pre><h2 id="HttpMessageConverter消息转换器简介"><a href="#HttpMessageConverter消息转换器简介" class="headerlink" title="HttpMessageConverter消息转换器简介"></a>HttpMessageConverter消息转换器简介</h2><p>HttpMessageConverter接口指定了一个可以把Http request信息和Http response信息进行格式转换的转换器。通常实现HttpMessageConverter接口的转换器有以下几种：<br>ByteArrayHttpMessageConverter: 负责读取二进制格式的数据和写出二进制格式的数据；<br>StringHttpMessageConverter：   负责读取字符串格式的数据和写出二进制格式的数据；<br>ResourceHttpMessageConverter：负责读取资源文件和写出资源文件数据；<br>FormHttpMessageConverter：       负责读取form提交的数据（能读取的数据格式为 application/x-www-form-urlencoded，不能读取multipart/form-data格式数据）；负责写入application/x-www-from-urlencoded和multipart/form-data格式的数据；<br>MappingJacksonHttpMessageConverter:  负责读取和写入json格式的数据；<br>SourceHttpMessageConverter：                   负责读取和写入 xml 中javax.xml.transform.Source定义的数据；<br>Jaxb2RootElementHttpMessageConverter:  负责读取和写入xml 标签格式的数据；<br>AtomFeedHttpMessageConverter:              负责读取和写入Atom格式的数据；<br>RssChannelHttpMessageConverter:           负责读取和写入RSS格式的数据；<br>（注）更多关于HttpMessageConverter的信息请看：<a href="http://docs.spring.io/spring/docs/3.0.x/api/org/springframework/http/converter/HttpMessageConverter.html" target="_blank" rel="external">http://docs.spring.io/spring/docs/3.0.x/api/org/springframework/http/converter/HttpMessageConverter.html</a></p>
+<h3 id="HttpMessageConverter请求信息转换器执行流程"><a href="#HttpMessageConverter请求信息转换器执行流程" class="headerlink" title="HttpMessageConverter请求信息转换器执行流程"></a>HttpMessageConverter请求信息转换器执行流程</h3><p>当用户发送请求后，@Requestbody注解会读取请求body中的数据，默认的请求转换器HttpMessageConverter通过获取请求头Header中的Content-Type来确认请求头的数据格式，从而来为请求<br>数据适配合适的转换器。例如contentType:applicatin/json，那么转换器会适配MappingJacksonHttpMessageConverter。响应时候的时候同理，@Responsebody注解会启用<br>HttpMessageConverter，通过检测Header中Accept属性来适配的响应的转换器。  </p>
+<h2 id="完整示例"><a href="#完整示例" class="headerlink" title="完整示例"></a>完整示例</h2><h3 id="客户端Ajax请求："><a href="#客户端Ajax请求：" class="headerlink" title="客户端Ajax请求："></a>客户端Ajax请求：</h3><pre><code>function sub(){
+      if(!confirm(&quot;确认删除吗？&quot;)){
+          windows.event.returnValue=&quot;false&quot;;
+      }else{
+          alert(&quot;发送数据&quot;);
+          $.ajax({
+              contentType:&quot;application/json&quot;,
+              url:&quot;${pageContext.request.contextPath }/login&quot;,
+              type:&quot;POST&quot;,
+              data:&apos;{&quot;send&quot;:&quot;post&quot;,&quot;username&quot;:&quot;cj&quot;,&quot;password&quot;:&quot;asd&quot;}&apos;,
+              dataType:&quot;json&quot;,
+              success:function(data,textStatus){
+                  alert(data.name+&quot;,&quot;+data.pwd);
+              },
+              error:function(){
+                  alert(&quot;删除操作失败&quot;);
+              }
+          });
+      }
+}
+</code></pre><p><strong>必须在ajax（）中设置参数 contentType:”application/json” ，</strong>覆盖默认的application/x-www-form-urlencoded格式，否则服务器会返回415错误，如下图：</p>
+<p><img src="/img/e.jpg" alt="asdds"></p>
+<p>因为spring的@Requestbody 注解会读取请求body中的数据，请求转换器HttpMessageConverter在收到请求后，会根据请求头中的contentType选择相应的转换器，如果是默认的<br>application/x-www-form-urlencoded，选择的转换器无法解析请求body中的json格式的字符串。浏览器在接收到数据的时候会根据Accept头对响应body的数据做相应的解析，如果是json类型的话就会将相应body中字符串转换成对象，我们在请求成功函数中就可以直接用data.name、data.pwd的方式取数据了</p>
+<h3 id="服务器代码："><a href="#服务器代码：" class="headerlink" title="服务器代码："></a>服务器代码：</h3><pre><code>//接收ajax请求
+//使用url的表达式动态传递参数
+//返回json
+@Controller
+@RequestMapping(&quot;/login&quot;)
+public class RegController {
+
+    @RequestMapping(method=RequestMethod.POST)    
+    public @ResponseBody Map&lt;String, String&gt; login(@RequestBody User user){
+        String name = user.getUsername();
+        String pwd = user.getPassword();
+        Map&lt;String , String&gt; map = new HashMap&lt;&gt;();
+        map.put(&quot;name&quot;, name);
+        map.put(&quot;pwd&quot;, pwd);
+        return map;
+    }
+}
+</code></pre><p>返回值可以为list也可以为Map类型或者其他复杂对象</p>
+<p>总结：<br>　　当在使用SpringMVC做服务器数据接收时，尤其是在做Ajax请求的时候，尤其要注意contentType属性，和accepte 属性的设置，在springmvc-config.xml中配置好相应的转换器。当我们在用SpringMVC做 Ajax 请求的时候，有的做法用response.getWriter().print()的方法，还有更好的方法就是添加@Responsebody注解，直接返回Map类型的数据，转换器自动转换为JSON数据类型。</p>
+<p>######注意</p>
+<p>spring MVC4以上，使用的json包有变更。<br>使用之前的json包出包Java.lang.NoClassDefFoundError: com/fasterxml/jackson/core/JsonProcessingException错误。<br>新用到包为jackson-annotations-2.5.0.jar，jackson-core-2.5.0.jar，jackson-databind-2.5.0.jar<br>spring-servlet.xml里面也有变动</p>
+<h2 id="我是分割线"><a href="#我是分割线" class="headerlink" title="我是分割线"></a><strong>我是分割线</strong></h2><h6 id="JSON-parse-和JSON-stringify"><a href="#JSON-parse-和JSON-stringify" class="headerlink" title="JSON.parse()和JSON.stringify"></a>JSON.parse()和JSON.stringify</h6><p>parse用于从一个字符串中解析出json对象,如</p>
+<pre><code>var str = &apos;{&quot;name&quot;:&quot;huangxiaojian&quot;,&quot;age&quot;:&quot;23&quot;}&apos;
+
+JSON.parse(str)
+</code></pre><p>返回一个Object：</p>
+<pre><code>age: &quot;23&quot;
+name: &quot;huangxiaojian&quot;
+__proto__: Object
+</code></pre><p>注意：单引号写在{}外，每个属性名都必须用双引号，否则会抛出异常。</p>
+<p>stringify()用于从一个对象解析出字符串，如</p>
+<pre><code>var a = {a:1,b:2}
+
+JSON.stringify(a)
+</code></pre><p>结果：</p>
+<pre><code>&quot;{&quot;a&quot;:1,&quot;b&quot;:2}&quot;
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring/">Spring</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/J2EE/">J2EE</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://daiguahub.com/2016/06/24/MIME类型及其在Spring-MVC中的处理/" data-title="MIME类型及其在Spring MVC中的处理 | xiao jian" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/06/24/spring使用过程中遇到的错误/" title="spring使用过程中遇到的错误">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  spring使用过程中遇到的错误</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/06/23/mongodb用户权限及配置说明/"  title="mongodb用户权限及配置说明">
+ <strong>NEXT:</strong><br/> 
+ <span>mongodb用户权限及配置说明
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="MIME类型及其在Spring MVC中的处理" data-thread-key="MIME类型及其在Spring-MVC中的处理" data-author-key="xiao jian" data-url="http://daiguahub.com/post/MIME类型及其在Spring-MVC中的处理"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP消息头中的MIME类型"><span class="toc-number">1.</span> <span class="toc-text">HTTP消息头中的MIME类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request部分"><span class="toc-number">2.</span> <span class="toc-text">Request部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC返回json数据的方法"><span class="toc-number">3.</span> <span class="toc-text">Spring MVC返回json数据的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-response直接写回"><span class="toc-number">3.1.</span> <span class="toc-text">1.response直接写回</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-引入jackson包"><span class="toc-number">3.2.</span> <span class="toc-text">2.引入jackson包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HttpMessageConverter消息转换器简介"><span class="toc-number">4.</span> <span class="toc-text">HttpMessageConverter消息转换器简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HttpMessageConverter请求信息转换器执行流程"><span class="toc-number">4.1.</span> <span class="toc-text">HttpMessageConverter请求信息转换器执行流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整示例"><span class="toc-number">5.</span> <span class="toc-text">完整示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端Ajax请求："><span class="toc-number">5.1.</span> <span class="toc-text">客户端Ajax请求：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器代码："><span class="toc-number">5.2.</span> <span class="toc-text">服务器代码：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我是分割线"><span class="toc-number">6.</span> <span class="toc-text">我是分割线</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#JSON-parse-和JSON-stringify"><span class="toc-number">6.0.0.0.1.</span> <span class="toc-text">JSON.parse()和JSON.stringify</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		<a href="http://weibo.com/2881468100" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/cjandcjy" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/J2EE/" title="J2EE">J2EE<sup>3</sup></a></li>
+		
+			<li><a href="/categories/JVM/" title="JVM">JVM<sup>7</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+		
+			<li><a href="/categories/http/" title="http">http<sup>2</sup></a></li>
+		
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>2</sup></a></li>
+		
+			<li><a href="/categories/java基础/" title="java基础">java基础<sup>3</sup></a></li>
+		
+			<li><a href="/categories/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/categories/mongodb/" title="mongodb">mongodb<sup>3</sup></a></li>
+		
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/categories/错误小结/" title="错误小结">错误小结<sup>3</sup></a></li>
+		
+			<li><a href="/categories/项目小结/" title="项目小结">项目小结<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongodb/" title="mongodb">mongodb<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mongodb-javascript-css/" title="mongodb javascript css">mongodb javascript css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongoDB/" style="font-size: 10px;">mongoDB</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/mongodb-javascript-css/" style="font-size: 10px;">mongodb javascript css</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="http://daiguahub.com" target="_blank" title="xiao jian">xiao jian</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jianbaobao"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '5';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

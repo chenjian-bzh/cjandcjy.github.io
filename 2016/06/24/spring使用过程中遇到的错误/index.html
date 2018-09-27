@@ -1,0 +1,594 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>spring使用过程中遇到的错误 | xiao jian</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiao jian">
+    
+    <meta name="description" content="错误一严重: Exception sending context initialized event to listener instance of class org.springframework.web.context.ContextLoaderListenerjava.lang.NoClas">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="xiao jian" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="xiao jian" title="xiao jian"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="xiao jian">xiao jian</a></h1>
+				<a class="blog-motto">尘世间一只迷途的小蚂农</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="Search"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/06/24/spring使用过程中遇到的错误/" title="spring使用过程中遇到的错误" itemprop="url">spring使用过程中遇到的错误</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://daiguahub.com" title="xiao jian">xiao jian</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-06-24T09:47:49.000Z" itemprop="datePublished">2016-06-24</time>
+    Updated:<time datetime="2016-06-26T09:39:28.327Z" itemprop="dateModified">2016-06-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#错误一"><span class="toc-number">1.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误二-springmvc静态资源访问不到的问题"><span class="toc-number">2.</span> <span class="toc-text">错误二 springmvc静态资源访问不到的问题</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误三-Spring中报”Could-not-resolve-placeholder”错误"><span class="toc-number">3.</span> <span class="toc-text">错误三 Spring中报”Could not resolve placeholder”错误</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误四-数据库链接错误-Access-denied-for-user-‘-°-e…±’-’localhost’-using-password-YES"><span class="toc-number">4.</span> <span class="toc-text">错误四  数据库链接错误 Access denied for user ‘?°????é…±’@’localhost’ (using password: YES)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误五-mybatis和spring整合过程中，出现-Invalid-bound-statement-not-found-错误"><span class="toc-number">5.</span> <span class="toc-text">错误五 mybatis和spring整合过程中，出现 Invalid bound statement (not found):错误</span></a></li></ol>
+		</div>
+		
+		<h6 id="错误一"><a href="#错误一" class="headerlink" title="错误一"></a>错误一</h6><p>严重: Exception sending context initialized event to listener instance of class org.springframework.web.context.ContextLoaderListener<br>java.lang.NoClassDefFoundError: org/springframework/core/ResolvableTypeProvider<br>    at java.lang.ClassLoader.defineClass1(Native Method)<br>    at java.lang.ClassLoader.defineClass(ClassLoader.java:760)<br>    at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)<br>    at org.apache.catalina.loader.WebappClassLoaderBase.findClassInternal(WebappClassLoaderBase.java:2503)<br>    at org.apache.catalina.loader.WebappClassLoaderBase.findClass(WebappClassLoaderBase.java:831)<br>    at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1274)<br>    at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1139)<br>    at java.lang.Class.getDeclaredConstructors0(Native Method)<br>    at java.lang.Class.privateGetDeclaredConstructors(Class.java:2671)<br>    at java.lang.Class.getConstructor0(Class.java:3075)<br>    at java.lang.Class.getDeclaredConstructor(Class.java:2178)<br>    at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:104)<br>    at org.springframework.web.context.ContextLoader.createWebApplicationContext(ContextLoader.java:360)<br>    at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:293)<br>    at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:106)<br>    at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4813)<br>    at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5272)<br>    at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:147)<br>    at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1407)<br>    at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1397)<br>    at java.util.concurrent.FutureTask.run(FutureTask.java:266)<br>    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)<br>    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)<br>    at java.lang.Thread.run(Thread.java:745)<br>Caused by: java.lang.ClassNotFoundException: org.springframework.core.ResolvableTypeProvider<br>    at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1305)<br>    at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1139)<br>    … 24 more</p>
+<p>原因：</p>
+<p>（1）在applicationContext.xml和spring-mvc.xml文件中重复定义了<context:annotation-config><br>（2）右击项目，点击properties，选择Deployment Assembly,将Maven Dependence加入deploy path</context:annotation-config></p>
+<h6 id="错误二-springmvc静态资源访问不到的问题"><a href="#错误二-springmvc静态资源访问不到的问题" class="headerlink" title="错误二 springmvc静态资源访问不到的问题"></a>错误二 springmvc静态资源访问不到的问题</h6><p>返回给用户的网页中包含有js、css、html、图片等静态资源，这些资源是需要额外加载的，除了引用外网的资源外，很大一部分还要向正在访问的服务器进行请求。访问springmvc架构的服务器，默认的访问的URL都会被DispatcherServlet所拦截，但是我们希望静态资源可以直接访问，其实方法有很多种，如：通过开放tomcat的defaultServlet，修改默认的url-parttern。但是SpringMVC提供了更为便捷的方式处理静态资源。</p>
+<p>解决方案：</p>
+<p>直接在servlet-context.xml中添加资源映射。</p>
+<p>我的项目文件目录如下：</p>
+<p><img src="/img/c.jpg" alt="adgf"></p>
+<p>途中的js文件夹存放的是js文件，另外在spring-mvc.xml文件中添加下面的代码：</p>
+<p><img src="/img/d.jpg" alt="agd"></p>
+<p>mapping：映射</p>
+<p>location：本地资源路径，注意必须是webapp根目录下的路径。</p>
+<p>两个*，它表示映射resources/下所有的URL，包括子路径（即接多个/）</p>
+<p>这样浏览器就可以加载URL: <a href="http://localhost:8080/bus/js/jquery.min.js中的文件了" target="_blank" rel="external">http://localhost:8080/bus/js/jquery.min.js中的文件了</a></p>
+<p>陷阱：</p>
+<p>配置的location一定要是webapp根目录下才行，也就是webapp/js文件夹中才能被访问到，如果资源目录为webapp/static/js，或者是放置到webapp/WEB-INF下面的话，则就会访问失败。这个问题常常会犯。</p>
+<p>WEB-INF目录作用:</p>
+<p>WEB-INF是Java的WEB应用的安全目录。所谓安全就是客户端无法访问，只有服务端可以访问的目录。<br>如果想在页面中直接访问其中的文件，必须通过web.xml文件对要访问的文件进行相应映射才能访问。</p>
+<h6 id="错误三-Spring中报”Could-not-resolve-placeholder”错误"><a href="#错误三-Spring中报”Could-not-resolve-placeholder”错误" class="headerlink" title="错误三 Spring中报”Could not resolve placeholder”错误"></a>错误三 Spring中报”Could not resolve placeholder”错误</h6><p>除去properites文件路径错误、拼写错误外，出现”Could not resolve placeholder”很有可能是使用了多个PropertyPlaceholderConfigurer或者多个<context:property-placeholder>的原因。比如我有一个applicationContext.xml读取db.properties，还有一个MongoDB.xml读取mongo.properties，然后在applicationContext.xml中import了MongoDB.xml文件</context:property-placeholder></p>
+<pre><code>&lt;!-- 导入mongodb的配置文件 --&gt;
+   &lt;import resource=&quot;mongodb-context.xml&quot;/&gt;
+</code></pre><p>如果这两个xml文件中分别有</p>
+<pre><code>&lt;!-- 加载mongodb的属性配置文件 --&gt;
+    &lt;context:property-placeholder location=&quot;classpath:properties/mongodb.properties&quot;/&gt;  
+
+&lt;!-- dfs.xml --&gt;  
+ &lt;context:property-placeholder location=&quot;classpath:properties/db.properties&quot; /&gt; 
+</code></pre><p>那么，一定会出”Could not resolve placeholder”。一定要记住，不管是在一个Spring文件还是在多个Spring文件被统一load的情况下，直接写</p>
+<pre><code>&lt;context:property-placeholder location=&quot;&quot; /&gt;  
+&lt;context:property-placeholder location=&quot;&quot; /&gt;   
+</code></pre><p>是不允许的。</p>
+<p>解决方案： 在Spring 3.0中，可以写：</p>
+<pre><code>&lt;!-- 加载mongodb的属性配置文件 --&gt;
+    &lt;context:property-placeholder location=&quot;classpath:properties/mongodb.properties&quot; ignore-unresolvable=&quot;true&quot;/&gt;  
+
+&lt;!-- dfs.xml --&gt;  
+ &lt;context:property-placeholder location=&quot;classpath:properties/db.properties&quot; ignore-unresolvable=&quot;true&quot;/&gt; 
+</code></pre><p>注意两个都要加上ignore-unresolvable=”true”，一个加另一个不加也是不行的</p>
+<h6 id="错误四-数据库链接错误-Access-denied-for-user-‘-°-e…±’-’localhost’-using-password-YES"><a href="#错误四-数据库链接错误-Access-denied-for-user-‘-°-e…±’-’localhost’-using-password-YES" class="headerlink" title="错误四  数据库链接错误 Access denied for user ‘?°????é…±’@’localhost’ (using password: YES)"></a>错误四  数据库链接错误 Access denied for user ‘?°????é…±’@’localhost’ (using password: YES)</h6><p>在spring和mybatis整合的过程中，出现了如下错误：</p>
+<pre><code>Caused by: java.sql.SQLException: Access denied for user &apos;?°????é…±&apos;@&apos;localhost&apos; (using password: YES)
+    at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:957)
+    at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3878)
+    at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3814)
+    at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:871)
+    at com.mysql.jdbc.MysqlIO.proceedHandshakeWithPluggableAuthentication(MysqlIO.java:1694)
+    at com.mysql.jdbc.MysqlIO.doHandshake(MysqlIO.java:1215)
+    at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2255)
+    at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2286)
+    at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2085)
+    at com.mysql.jdbc.ConnectionImpl.&lt;init&gt;(ConnectionImpl.java:795)
+    at com.mysql.jdbc.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:44)
+    at sun.reflect.GeneratedConstructorAccessor23.newInstance(Unknown Source)
+    at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+    at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+    at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+    at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:400)
+    at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:327)
+    at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1375)
+    at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1431)
+    at com.alibaba.druid.pool.DruidDataSource$CreateConnectionThread.run(DruidDataSource.java:1888)
+</code></pre><p> 可以看到错误原因是    <code>Access denied for user &#39;?°????é…±&#39;@&#39;localhost&#39; (using password: YES)</code> ，根据我的配置文件：</p>
+<pre><code>driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/bussystem
+username=root
+password=root
+initialSize=0
+maxActive=20
+maxIdle=20
+minIdle=1    
+maxWait=6000
+</code></pre><p>连接数据库的时候数据库名称这一项本应该是“root”，而在实际链接的时候变成了乱码 “?°????é…±” ，这个问题困扰了我很久，最后不得不通过以下这样很无奈的方法解决：</p>
+<pre><code>&lt;!--数据连接池配置--&gt;
+&lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;
+    &lt;property name=&quot;driverClassName&quot; value=&quot;${driverClassName}&quot;/&gt;
+    &lt;property name=&quot;url&quot; value=&quot;${url}&quot;/&gt;
+    &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+    &lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt;
+
+    &lt;!-- 初始化连接大小 --&gt;
+    &lt;property name=&quot;initialSize&quot; value=&quot;${initialSize}&quot;/&gt;
+    &lt;!-- 连接池最大数量 --&gt;
+    &lt;property name=&quot;maxActive&quot; value=&quot;${maxActive}&quot;/&gt;
+    &lt;!-- 连接池最大空闲 --&gt;
+    &lt;property name=&quot;maxIdle&quot; value=&quot;${maxIdle}&quot;/&gt;
+    &lt;!-- 连接池最小空闲 --&gt;
+    &lt;property name=&quot;minIdle&quot; value=&quot;${minIdle}&quot;/&gt;
+    &lt;!-- 获取连接最大等待时间 --&gt;
+    &lt;property name=&quot;maxWait&quot; value=&quot;${maxWait}&quot;/&gt;
+&lt;/bean&gt;
+</code></pre><p>也就是在ApplicationContext.xml文件中的数据库连接配置中，将<property name="username" value="root">和<property name="password" value="root">两项设置中的value值直接写死为“root”，这样就可以正常连接了。至于错误原因还没有搞清楚，希望有知道的朋友可以帮忙解答。</property></property></p>
+<h6 id="错误五-mybatis和spring整合过程中，出现-Invalid-bound-statement-not-found-错误"><a href="#错误五-mybatis和spring整合过程中，出现-Invalid-bound-statement-not-found-错误" class="headerlink" title="错误五 mybatis和spring整合过程中，出现 Invalid bound statement (not found):错误"></a>错误五 mybatis和spring整合过程中，出现 Invalid bound statement (not found):错误</h6><pre><code>org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.web.dao.BasicBusInfoDao.getBusInfo
+    at org.apache.ibatis.binding.MapperMethod$SqlCommand.&lt;init&gt;(MapperMethod.java:196)
+    at org.apache.ibatis.binding.MapperMethod.&lt;init&gt;(MapperMethod.java:44)
+    at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:59)
+    at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+    at com.sun.proxy.$Proxy77.getBusInfo(Unknown Source)
+    at com.web.serviceImpl.BasicDataServiceImpl.getBusDataByPage(BasicDataServiceImpl.java:23)
+    at com.web.controller.BasicDataController.loadData(BasicDataController.java:50)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:497)
+</code></pre><p>究其原因就是mapper映射文件中的namespace写错了！！！</p>
+<pre><code>&lt;mapper namespace=&quot;com.web.dao.BasicBusInfoDao&quot;&gt;
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spring/">spring</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/J2EE/">J2EE</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://daiguahub.com/2016/06/24/spring使用过程中遇到的错误/" data-title="spring使用过程中遇到的错误 | xiao jian" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/06/26/使用jquery-easyui-datagrid和pageHelper插件实现分页详解/" title="使用jquery easyui datagrid和pageHelper插件实现分页详解">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  使用jquery easyui datagrid和pageHelper插件实现分页详解</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/06/24/MIME类型及其在Spring-MVC中的处理/"  title="MIME类型及其在Spring MVC中的处理">
+ <strong>NEXT:</strong><br/> 
+ <span>MIME类型及其在Spring MVC中的处理
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="spring使用过程中遇到的错误" data-thread-key="spring使用过程中遇到的错误" data-author-key="xiao jian" data-url="http://daiguahub.com/post/spring使用过程中遇到的错误"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#错误一"><span class="toc-number">1.</span> <span class="toc-text">错误一</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误二-springmvc静态资源访问不到的问题"><span class="toc-number">2.</span> <span class="toc-text">错误二 springmvc静态资源访问不到的问题</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误三-Spring中报”Could-not-resolve-placeholder”错误"><span class="toc-number">3.</span> <span class="toc-text">错误三 Spring中报”Could not resolve placeholder”错误</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误四-数据库链接错误-Access-denied-for-user-‘-°-e…±’-’localhost’-using-password-YES"><span class="toc-number">4.</span> <span class="toc-text">错误四  数据库链接错误 Access denied for user ‘?°????é…±’@’localhost’ (using password: YES)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#错误五-mybatis和spring整合过程中，出现-Invalid-bound-statement-not-found-错误"><span class="toc-number">5.</span> <span class="toc-text">错误五 mybatis和spring整合过程中，出现 Invalid bound statement (not found):错误</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		<a href="http://weibo.com/2881468100" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/cjandcjy" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/J2EE/" title="J2EE">J2EE<sup>3</sup></a></li>
+		
+			<li><a href="/categories/JVM/" title="JVM">JVM<sup>7</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+		
+			<li><a href="/categories/http/" title="http">http<sup>2</sup></a></li>
+		
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>2</sup></a></li>
+		
+			<li><a href="/categories/java基础/" title="java基础">java基础<sup>3</sup></a></li>
+		
+			<li><a href="/categories/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/categories/mongodb/" title="mongodb">mongodb<sup>3</sup></a></li>
+		
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/categories/错误小结/" title="错误小结">错误小结<sup>3</sup></a></li>
+		
+			<li><a href="/categories/项目小结/" title="项目小结">项目小结<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongodb/" title="mongodb">mongodb<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mongodb-javascript-css/" title="mongodb javascript css">mongodb javascript css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongoDB/" style="font-size: 10px;">mongoDB</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/mongodb-javascript-css/" style="font-size: 10px;">mongodb javascript css</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="http://daiguahub.com" target="_blank" title="xiao jian">xiao jian</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jianbaobao"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '5';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

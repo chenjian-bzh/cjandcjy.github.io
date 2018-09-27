@@ -1,0 +1,658 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>java内部类的意义和作用 | xiao jian</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiao jian">
+    
+    <meta name="description" content="一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点1.内部类可以很好的实现隐藏，一般的非内部类，是不允许有 private 与protected权限的，但内部类可以2.内部类拥有外围类的所有元素的访问权限3.可是实现多重继承4.可以避免修改接口而实现同一个类中两种同名方法的调用。
+二、静态内">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="xiao jian" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="xiao jian" title="xiao jian"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="xiao jian">xiao jian</a></h1>
+				<a class="blog-motto">尘世间一只迷途的小蚂农</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="Search"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/08/java内部类的意义和作用/" title="java内部类的意义和作用" itemprop="url">java内部类的意义和作用</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://daiguahub.com" title="xiao jian">xiao jian</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-09-08T08:42:03.000Z" itemprop="datePublished">2016-09-08</time>
+    Updated:<time datetime="2016-09-08T08:53:02.226Z" itemprop="dateModified">2016-09-08</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点"><span class="toc-number">1.</span> <span class="toc-text">一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、静态内部类和非静态内部类"><span class="toc-number">2.</span> <span class="toc-text">二、静态内部类和非静态内部类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、例子"><span class="toc-number">3.</span> <span class="toc-text">三、例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-实现隐藏"><span class="toc-number">3.1.</span> <span class="toc-text">1.实现隐藏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-可以无条件地访问外围类的所有元素"><span class="toc-number">3.2.</span> <span class="toc-text">2.可以无条件地访问外围类的所有元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-可以实现多重继承"><span class="toc-number">3.3.</span> <span class="toc-text">3.可以实现多重继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、-避免修改接口而实现同一个类中两种同名方法的调用。"><span class="toc-number">3.4.</span> <span class="toc-text">四、 避免修改接口而实现同一个类中两种同名方法的调用。</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点"><a href="#一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点" class="headerlink" title="一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点"></a>一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点</h2><p>1.内部类可以很好的实现隐藏，一般的非内部类，是不允许有 private 与protected权限的，但内部类可以<br>2.内部类拥有外围类的所有元素的访问权限<br>3.可是实现多重继承<br>4.可以避免修改接口而实现同一个类中两种同名方法的调用。</p>
+<h2 id="二、静态内部类和非静态内部类"><a href="#二、静态内部类和非静态内部类" class="headerlink" title="二、静态内部类和非静态内部类"></a>二、静态内部类和非静态内部类</h2><p>如果不需要内部类对象与其外围类对象之间有联系，那你可以将内部类声明为static。这通常称为嵌套类（nested class）。Static Nested Class是被声明为静态（static）的内部类，它可以不依赖于外部类实例被实例化。而通常的内部类需要在外部类实例化后才能实例化。想要理解static应用于内部类时的含义，你就必须记住，普通的内部类对象隐含地保存了一个引用，指向创建它的外围类对象。然而，当内部类是static的时，就不是这样了。</p>
+<p>1 . 静态内部类可以有静态成员，而非静态内部类则不能有静态成员。<br>2 . 静态内部类的非静态成员可以访问外部类的静态变量，而不可访问外部类的非静态变量；<br>3 . 非静态内部类的非静态成员可以访问外部类的非静态变量。</p>
+<pre><code>生成一个静态内部类不需要外部类成员：这是静态内部类和成员内部类的区别。静态内部类的对象可以直接生成：Outer.Inner in = new Outer.Inner();而不需要通过生成外部类对象来生成。这样实际上使静态内部类成为了一个顶级类(正常情况下，你不能在接口内部放置任何代码，但嵌套类可以作为接口的一部分，因为它是static 的。只是将嵌套类置于接口的命名空间内，这并不违反接口的规则） 
+</code></pre><p>例如：</p>
+<pre><code>public interface Outer {
+
+    public static final class inner{
+        void dosth() {
+            System.out.println(&quot;I&apos;m a inner class in interface&quot;);
+        }
+    }
+}
+</code></pre><p>以上在接口中声明了一个成员变量，而这个变量恰恰是一个静态内部类</p>
+<h2 id="三、例子"><a href="#三、例子" class="headerlink" title="三、例子"></a>三、例子</h2><h3 id="1-实现隐藏"><a href="#1-实现隐藏" class="headerlink" title="1.实现隐藏"></a>1.实现隐藏</h3><p>   平时我们对类的访问权限，都是通过类前面的访问修饰符来限制的，一般的非内部类，是不允许有 private 与protected权限的，但内部类可以，所以我们能通过内部类来隐藏我们的信息。可以看下面的例子<br>    //接口<br>    package insidecategory;</p>
+<pre><code>public interface Incrementable
+{
+ void increment();
+}
+//具体类
+package insidecategory;
+
+public class Example {
+
+    private class InsideClass implements InterfaceTest
+    {
+         public void test()
+         {
+             System.out.println(&quot;这是一个测试&quot;);
+         }
+    }
+    public InterfaceTest getIn()
+    {
+        return new InsideClass();
+    }
+}
+</code></pre><p>上面加粗的部分是内部类，访问修饰符是private,客户端程序:</p>
+<pre><code>package insidecategory;
+
+public class TestExample {
+
+ public static void main(String args[])
+ {
+    Example a=new Example();
+    InterfaceTest a1=a.getIn();
+    a1.test();
+ }
+}
+</code></pre><p>加粗的那部分就是客户端调用的代码，从这段代码里面我只知道Example的getIn()方法能返回一个InterfaceTest实例但我并不知道这个实例是这么实现的。<br>而且由于InsideClass是private的，所以我们如果不看代码的话根本看不到这个具体类的名字，所以说它可以很好的实现隐藏。</p>
+<h3 id="2-可以无条件地访问外围类的所有元素"><a href="#2-可以无条件地访问外围类的所有元素" class="headerlink" title="2.可以无条件地访问外围类的所有元素"></a>2.可以无条件地访问外围类的所有元素</h3><pre><code>package insidecategory;
+
+public class TagBean {
+
+ private String name=&quot;liutao&quot;;
+   private class InTest
+   {
+      public InTest()
+      {
+          System.out.println(name);
+      }
+   }
+   public void test()
+   {
+    new InTest();
+   }
+   public static void main(String args[])
+   {
+       TagBean bb=new TagBean();
+       bb.test();
+   }
+}
+</code></pre><p>看上面加粗部分，name这个变量是在TagBean里面定义的私有变量。这个变量在内部类中可以无条件地访问System.out.println(name);</p>
+<h3 id="3-可以实现多重继承"><a href="#3-可以实现多重继承" class="headerlink" title="3.可以实现多重继承"></a>3.可以实现多重继承</h3><pre><code>这个特点非常重要，个人认为它是内部类存在的最大理由之一。正是由于他的存在使得Java的继承机制更加完善。大家都知道Java只能继承一个类，它的多重继承在我们没有学习内部类之前是用接口来实现的。但使用接口有时候有很多不方便的地方。比如我们实现一个接口就必须实现它里面的所有方法。而有了内部类就不一样了。它可以使我们的类继承多个具体类或抽象类。大家看下面的例子。
+
+//类一
+ package insidecategory;
+
+public class Example1 {
+
+   public String name()
+   {
+       return &quot;liutao&quot;;
+   }
+}
+//类二
+package insidecategory;
+
+public class Example2 {
+
+    public int age()
+    {
+        return 25;
+    }
+}
+
+//类三
+package insidecategory;
+
+public class MainExample
+{
+   private class test1 extends Example1
+    {
+        public String name()
+        {
+          return super.name();
+        }
+    }
+    private class test2 extends Example2
+    {
+       public int age()
+       {
+         return super.age();
+       }
+    }
+   public String name()
+    {
+    return new test1().name();
+   }
+   public int age()
+   {
+       return new test2().age();
+   }
+   public static void main(String args[])
+   {
+       MainExample mi=new MainExample();
+       System.out.println(&quot;姓名:&quot;+mi.name());
+       System.out.println(&quot;年龄:&quot;+mi.age());
+   }
+}
+</code></pre><p>大家注意看类三，里面分别实现了两个内部类 test1,和test2 ，test1类又继承了Example1，test2继承了Example2，这样我们的类三MainExample就拥有了Example1和Example2的方法和属性，也就间接地实现了多继承。</p>
+<h3 id="四、-避免修改接口而实现同一个类中两种同名方法的调用。"><a href="#四、-避免修改接口而实现同一个类中两种同名方法的调用。" class="headerlink" title="四、 避免修改接口而实现同一个类中两种同名方法的调用。"></a>四、 避免修改接口而实现同一个类中两种同名方法的调用。</h3><p> 大家假想一下如果，你的类要继承一个类，还要实现一个接口，可是你发觉你继承的类和接口里面有两个同名的方法怎么办？你怎么区分它们？？这就需要我们的内部类了。看下面的代码<br>    //接口<br>     package insidecategory;</p>
+<pre><code>public interface Incrementable
+{
+ void increment();
+}
+
+//类 MyIncrement
+package insidecategory;
+
+public class MyIncrement {
+
+    public void increment()
+    {
+      System.out.println(&quot;Other increment()&quot;);
+    }
+    static void f(MyIncrement f)
+    {
+        f.increment();
+    }
+
+}
+</code></pre><p>大家看上面加黑的部分，两个方法都是一样的。在看下面这个类要继承这两个类<br>如果不用内部类</p>
+<pre><code>package insidecategory;
+
+public class Callee2 extends MyIncrement implements Incrementable
+{
+public void increment()
+      {
+        //代码
+       }
+}
+</code></pre><p>想问一下大家increment()这个方法是属于覆盖MyIncrement这里的方法呢？还是Incrementable这里的方法。我怎么能调到MyIncrement这里的方法？显然这是不好区分的。而我们如果用内部类就很好解决这一问题了。看下面代码</p>
+<pre><code>package insidecategory;
+
+public class Callee2 extends MyIncrement
+{
+ private int i=0;
+ private void incr()
+ {
+       i++;
+       System.out.println(i);
+ }
+ private class Closure implements Incrementable
+ {
+      public void increment()
+      {
+        incr();
+      }
+ }
+ Incrementable getCallbackReference()
+ {
+      return new Closure();
+ }
+}
+</code></pre><p>我们可以用内部类来实现接口，这样就不会与外围类的方法冲突了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://daiguahub.com/2016/09/08/java内部类的意义和作用/" data-title="java内部类的意义和作用 | xiao jian" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/08/30/删除链表中重复的结点/"  title="删除链表中重复的结点">
+ <strong>NEXT:</strong><br/> 
+ <span>删除链表中重复的结点
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="java内部类的意义和作用" data-thread-key="java内部类的意义和作用" data-author-key="xiao jian" data-url="http://daiguahub.com/post/java内部类的意义和作用"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点"><span class="toc-number">1.</span> <span class="toc-text">一、放在一个类的内部的类我们就叫内部类。主要有以下几个特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、静态内部类和非静态内部类"><span class="toc-number">2.</span> <span class="toc-text">二、静态内部类和非静态内部类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、例子"><span class="toc-number">3.</span> <span class="toc-text">三、例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-实现隐藏"><span class="toc-number">3.1.</span> <span class="toc-text">1.实现隐藏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-可以无条件地访问外围类的所有元素"><span class="toc-number">3.2.</span> <span class="toc-text">2.可以无条件地访问外围类的所有元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-可以实现多重继承"><span class="toc-number">3.3.</span> <span class="toc-text">3.可以实现多重继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、-避免修改接口而实现同一个类中两种同名方法的调用。"><span class="toc-number">3.4.</span> <span class="toc-text">四、 避免修改接口而实现同一个类中两种同名方法的调用。</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		<a href="http://weibo.com/2881468100" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/cjandcjy" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/J2EE/" title="J2EE">J2EE<sup>3</sup></a></li>
+		
+			<li><a href="/categories/JVM/" title="JVM">JVM<sup>7</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+		
+			<li><a href="/categories/http/" title="http">http<sup>2</sup></a></li>
+		
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>2</sup></a></li>
+		
+			<li><a href="/categories/java基础/" title="java基础">java基础<sup>3</sup></a></li>
+		
+			<li><a href="/categories/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/categories/mongodb/" title="mongodb">mongodb<sup>3</sup></a></li>
+		
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/categories/错误小结/" title="错误小结">错误小结<sup>3</sup></a></li>
+		
+			<li><a href="/categories/项目小结/" title="项目小结">项目小结<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongodb/" title="mongodb">mongodb<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mongodb-javascript-css/" title="mongodb javascript css">mongodb javascript css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongoDB/" style="font-size: 10px;">mongoDB</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/mongodb-javascript-css/" style="font-size: 10px;">mongodb javascript css</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="http://daiguahub.com" target="_blank" title="xiao jian">xiao jian</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jianbaobao"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '5';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
