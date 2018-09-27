@@ -1,399 +1,569 @@
-<!DOCTYPE html>
-<html lang="en">
+
+ <!DOCTYPE HTML>
+<html >
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="chenjian&#39; blog">
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/img/favicon.ico">
-
-    <title>
-        
-        
-        
-    </title>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/aircloud.css">
-    <link rel="stylesheet" href="/css/gitment.css">
-    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
-    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
-    <!-- ga & ba script hoook -->
-    <script></script>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>nginx配置和使用 | xiao jian</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xiao jian">
+    
+    <meta name="description" content="windows在官网下载安装包之后解压，运行nginx.exe即可运行服务器下面是一些简单的指令：1、启动：
+C:\server\nginx-1.0.2&amp;gt;start nginx
+或
+C:\server\nginx-1.0.2&amp;gt;nginx.exe
+注：建议使用第一种，第二种会使你的cmd窗">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="xiao jian" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
 </head>
 
-<body>
-
-<div class="site-nav-toggle" id="site-nav-toggle">
-    <button>
-        <span class="btn-bar"></span>
-        <span class="btn-bar"></span>
-        <span class="btn-bar"></span>
-    </button>
-</div>
-
-<div class="index-about">
-    <i>  </i>
-</div>
-
-<div class="index-container">
-    
-    <div class="index-left">
-        
-<div class="nav" id="nav">
-    <div class="avatar-name">
-        <div class="avatar">
-            <img src="/" />
-        </div>
-        <div class="name">
-            <i>xiaojian</i>
-        </div>
-    </div>
-    <div class="contents" id="nav-content">
-        <ul>
-            <li >
-                <a href="/">
-                    <i class="iconfont icon-shouye1"></i>
-                    <span>HOME</span>
-                </a>
-            </li>
-            <li >
-                <a href="/tags">
-                    <i class="iconfont icon-biaoqian1"></i>
-                    <span>TAGS</span>
-                </a>
-            </li>
-            <li >
-                <a href="/archives">
-                    <i class="iconfont icon-guidang2"></i>
-                    <span>ARCHIVES</span>
-                </a>
-            </li>
-            <li >
-                <a href="/about/">
-                    <i class="iconfont icon-guanyu2"></i>
-                    <span>ABOUT</span>
-                </a>
-            </li>
-            
-        </ul>
-    </div>
-    
-        <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">my new post</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6月21日"><span class="toc-text">6月21日</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">Comentarios</span></a></li></ol>
-</div>
-    
-</div>
-
-
-<div class="search-field" id="search-field">
-    <div class="search-container">
-        <div class="search-input">
-            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
-            <input id="search-input"/>
-            <span id="begin-search">search</span>
-        </div>
-        <div class="search-result-container" id="search-result-container">
-
-        </div>
-    </div>
-</div>
-        <div class="index-about-mobile">
-            <i>  </i>
-        </div>
-    </div>
-    
-    <div class="index-middle">
-        <!-- Main Content -->
-        
-
-
-<div class="post-container">
-    <div class="post-title">
-        
-    </div>
-
-    <div class="post-meta">
-        <span class="attr">Post：<span>2018-09-27 18:25:26</span></span>
-        
-        </span>
-        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
-</span>
-</span>
-    </div>
-    <div class="post-content ">
-        <!DOCTYPE HTML>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>my new post | Hexo</title>
-  <meta name="author" content="John Doe">
-  
-  <meta name="description" content="6月21日花了一下午的时间搭好了hexo博客平台，并将其托管到github上
-欢迎大家访问我的主页！    下面分享一下配置过程中可能遇到的问题以及解决方法。    首先在">
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <meta property="og:title" content="my new post">
-  <meta property="og:site_name" content="Hexo">
-
-  
-    <meta property="og:image" content="undefined">
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-<link rel="stylesheet" href="/css/style.css">
-  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-368771XX-X']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
-</head>
-
-<body>
-  <header id="header" class="normal_mode">
-    <nav id="main-nav">
-  <ul class="container">
-    
-      <li><a href="/">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-  </ul>
-  <div class="clearfix"></div>
-</nav>
-  </header>
-  <div id="content" class="container">
-    <article class="post">
-  
-    <div class="gallery">
-  <div class="photoset">
-    
-      <img src="">
-    
-  </div>
-  <div class="control">
-    <div class="prev"></div>
-    <div class="next"></div>
-  </div>
-</div>
-  
-  <div class="post-content">
+  <body>
     <header>
-      
-      <time datetime="2016-06-21T10:28:04.000Z"><a href="/2016/06/21/my-new-post/">Tue, Jun 21 2016, 6:28:04 pm</a></time>
-
-  
-    <h1 class="title">my new post</h1>
-  
-
-
-
-<div class="clear"></div>
-      
-    </header>
-    <div class="entry">
-      
-        <h2 id="6月21日"><a href="#6月21日" class="headerlink" title="6月21日"></a>6月21日</h2><pre><code>花了一下午的时间搭好了hexo博客平台，并将其托管到github上
-</code></pre><p>欢迎大家访问<a href="https://cjandcjy.github.io/" target="_blank" rel="external">我的主页</a>！<br>    下面分享一下配置过程中可能遇到的问题以及解决方法。<br>    首先在</p>
-
-      
-    </div>
-    <footer>
-      
-          
-<!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <span class="jiathis_txt">分享到：</span>
-  <a class="jiathis_button_weixin">微信</a>
-  <a class="jiathis_button_tsina">新浪微博</a>
-  <a class="jiathis_button_renren">人人网</a>
-  <a class="jiathis_button_qzone">QQ空间</a>
-  <a class="jiathis_button_douban">豆瓣</a>
-  <a class="jiathis_button_pocket">Pocket</a>
-  <a href="http://www.jiathis.com/share?uid=901656" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-  <a class="jiathis_counter_style"></a>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="xiao jian" title="xiao jian"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="xiao jian">xiao jian</a></h1>
+				<a class="blog-motto">尘世间一只迷途的小蚂农</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="Search"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
 </div>
-<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=901656" charset="utf-8"></script>
-<!-- JiaThis Button END -->
 
-          <div class="clearfix"></div>
-          <nav id="pagination">
-  
-  
-    <a href="/2016/06/21/hello-world/" class="alignright next">Prev<i class="fa fa-long-arrow-right"></i></a>
-  
-  <div class="clearfix"></div>
-</nav>
-      
-      <div class="clearfix"></div>
-    </footer>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/01/nginx配置和使用/" title="nginx配置和使用" itemprop="url">nginx配置和使用</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://daiguahub.com" title="xiao jian">xiao jian</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-08-01T09:22:43.000Z" itemprop="datePublished">2016-08-01</time>
+    Updated:<time datetime="2016-08-01T09:54:38.432Z" itemprop="dateModified">2016-08-01</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#windows在官网下载安装包之后解压，运行nginx-exe即可运行服务器"><span class="toc-number">1.</span> <span class="toc-text">windows在官网下载安装包之后解压，运行nginx.exe即可运行服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx做反向代理服务器"><span class="toc-number">2.</span> <span class="toc-text">nginx做反向代理服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负载均衡配置"><span class="toc-number">3.</span> <span class="toc-text">负载均衡配置</span></a></li></ol>
+		</div>
+		
+		<h3 id="windows在官网下载安装包之后解压，运行nginx-exe即可运行服务器"><a href="#windows在官网下载安装包之后解压，运行nginx-exe即可运行服务器" class="headerlink" title="windows在官网下载安装包之后解压，运行nginx.exe即可运行服务器"></a>windows在官网下载安装包之后解压，运行nginx.exe即可运行服务器</h3><p>下面是一些简单的指令：<br>1、启动：</p>
+<p>C:\server\nginx-1.0.2&gt;start nginx</p>
+<p>或</p>
+<p>C:\server\nginx-1.0.2&gt;nginx.exe</p>
+<p>注：建议使用第一种，第二种会使你的cmd窗口一直处于执行中，不能进行其他命令操作。</p>
+<p>2、停止：</p>
+<p>C:\server\nginx-1.0.2&gt;nginx.exe -s stop</p>
+<p>或</p>
+<p>C:\server\nginx-1.0.2&gt;nginx.exe -s quit</p>
+<p>注：stop是快速停止nginx，可能并不保存相关信息；quit是完整有序的停止nginx，并保存相关信息。</p>
+<p>3、重新载入Nginx：</p>
+<p>C:\server\nginx-1.0.2&gt;nginx.exe -s reload</p>
+<p>当配置信息修改，需要重新载入这些配置时使用此命令。</p>
+<p>4、重新打开日志文件：</p>
+<p>C:\server\nginx-1.0.2&gt;nginx.exe -s reopen</p>
+<p>5、查看Nginx版本：</p>
+<p>C:\server\nginx-1.0.2&gt;nginx -v</p>
+<h3 id="nginx做反向代理服务器"><a href="#nginx做反向代理服务器" class="headerlink" title="nginx做反向代理服务器"></a>nginx做反向代理服务器</h3><p>1、更改nginx的配置文件</p>
+<p>更改nginx.conf文件，在http/server/location层次结构下，添加proxy_pass <a href="http://localhost:7080" target="_blank" rel="external">http://localhost:7080</a>; 一句话即可。注意不要放了;结尾。</p>
+<pre><code>server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+             proxy_pass  127.0.0.1:8080
+       }
+</code></pre><p>3、重启nginx，在浏览器中输入nginx的访问地址，显示的就是Tomcat的访问地址。    </p>
+<p>4、现在虽然nginx反向代理成功了，但是为了更好的发挥nginx的性能。我们将Tomcat的js、html、图片等静态文件配置到nginx上进行缓存，这样就可以提高应用的访问效率了。</p>
+<p>5、删除 location / 节点，避免全部请求被拦截。新增 location ~ .jsp$ 节点和 location ~ .(html|js|css|png|gif|jpg)$ 节点，如下:</p>
+<pre><code>server {
+    listen       80;
+    server_name  localhost;
+
+    #charset koi8-r;
+
+    #access_log  logs/host.access.log  main;
+
+
+    location ~ \.jsp$ {
+       proxy_pass  127.0.0.1:8080
+    }
+
+    location ~ \.(html|js|css|jpg|png|gif)${
+         root tomcat
+}    
+</code></pre><p>6、访问<a href="http://127.0.0.1，返回nginx" target="_blank" rel="external">http://127.0.0.1，返回nginx</a> 404。这是因为匹配的location，应用自动跳转到nginx的404.</p>
+<p>访问<a href="http://127.0.0.1/index.jsp，返回到tomcat页面。因为jsp会自动匹配配置的location。" target="_blank" rel="external">http://127.0.0.1/index.jsp，返回到tomcat页面。因为jsp会自动匹配配置的location。</a></p>
+<p>访问<a href="http://127.0.0.1/tomcat.png，因为tomcat.png放在根目录下的tomcat文件里里，也能正确显示这个logo。说明nginx配置的静态文件location是生效的。" target="_blank" rel="external">http://127.0.0.1/tomcat.png，因为tomcat.png放在根目录下的tomcat文件里里，也能正确显示这个logo。说明nginx配置的静态文件location是生效的。</a></p>
+<p>至此，Nginx配置反向代理Tomcat完成。</p>
+<h3 id="负载均衡配置"><a href="#负载均衡配置" class="headerlink" title="负载均衡配置"></a>负载均衡配置</h3><p>假设有两台tomcat服务器，在同一台机器上做测试时可以开两个tomcat进程，前提是两个tomcat中的所有端口都要不同</p>
+<pre><code>upstream mytomcats {  
+
+      server 127.0.0.1:8080;  
+
+      server 127.0.0.1:8081;  
+
+    }  
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+
+        location ~ \.jsp$ {
+           proxy_pass  http://mytomcats;
+        }
+
+        location ~ \.(html|js|css|jpg|png|gif)$ {
+             root tomcat;
+        }
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/http/">http</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://daiguahub.com/2016/08/01/nginx配置和使用/" data-title="nginx配置和使用 | xiao jian" data-tsina="null" class="share clearfix">
   </div>
-</article>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/08/04/finally块中代码什么时候执行/" title="finally块中代码什么时候执行">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  finally块中代码什么时候执行</span>
+</a>
+</div>
 
 
-<section id="comment">
-  <h1 class="title">Comentarios</h1>
+<div class="next">
+<a href="/2016/08/01/服务器https-SSL配置/"  title="服务器https/SSL配置">
+ <strong>NEXT:</strong><br/> 
+ <span>服务器https/SSL配置
+</span>
+</a>
+</div>
 
-  
-      <!-- Duoshuo Comment BEGIN -->
-<div class="ds-thread" data-thread-key="/2016/06/21/my-new-post/"></div>
-<!-- Duoshuo Comment END -->
-  
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="nginx配置和使用" data-thread-key="nginx配置和使用" data-author-key="xiao jian" data-url="http://daiguahub.com/post/nginx配置和使用"></div>
+	
 </section>
 
 
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
-    <div class="clearfix"></div>
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#windows在官网下载安装包之后解压，运行nginx-exe即可运行服务器"><span class="toc-number">1.</span> <span class="toc-text">windows在官网下载安装包之后解压，运行nginx.exe即可运行服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx做反向代理服务器"><span class="toc-number">2.</span> <span class="toc-text">nginx做反向代理服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负载均衡配置"><span class="toc-number">3.</span> <span class="toc-text">负载均衡配置</span></a></li></ol>
   </div>
-  <footer id="footer" class="inner"><div>
-  
-  &copy; 2016 John Doe
-  
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		<a href="http://weibo.com/2881468100" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/cjandcjy" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
 </div>
-Powered by <a href="http://zespia.tw/hexo/" title="Hexo" target="_blank" rel="external">Hexo</a> and <a href="http://pages.github.com/" title="GitHub Pages" target="_blank" rel="external">GitHub Pages</a>
 
-<div class="clearfix"></div></footer>
   
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/J2EE/" title="J2EE">J2EE<sup>3</sup></a></li>
+		
+			<li><a href="/categories/JVM/" title="JVM">JVM<sup>7</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+		
+			<li><a href="/categories/http/" title="http">http<sup>2</sup></a></li>
+		
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>2</sup></a></li>
+		
+			<li><a href="/categories/java基础/" title="java基础">java基础<sup>3</sup></a></li>
+		
+			<li><a href="/categories/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/categories/mongodb/" title="mongodb">mongodb<sup>3</sup></a></li>
+		
+			<li><a href="/categories/算法/" title="算法">算法<sup>2</sup></a></li>
+		
+			<li><a href="/categories/错误小结/" title="错误小结">错误小结<sup>3</sup></a></li>
+		
+			<li><a href="/categories/项目小结/" title="项目小结">项目小结<sup>2</sup></a></li>
+		
+		</ul>
+</div>
 
 
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongoDB/" title="mongoDB">mongoDB<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mongodb/" title="mongodb">mongodb<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mongodb-javascript-css/" title="mongodb javascript css">mongodb javascript css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
 
 
-    <script type="text/javascript">
-        (function(){
-
-            $(window).scroll(function(){
-
-                var scrollTop = $(window).scrollTop();
-                if ( scrollTop >200 ){
-                    $("#main-nav").removeClass('normal_mode').addClass('top_mode');
-                } else{
-                    $("#main-nav").removeClass('top_mode').addClass('normal_mode');
-                }
-
-            });
-
-        })();
-    </script>
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
 
 
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS</a>
+</div>
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript">
-  (function($){
-    $('.fancybox').fancybox({
-      'titlePosition': 'inside'
-    });
-  })(jQuery);
-  </script>
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongoDB/" style="font-size: 10px;">mongoDB</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/mongodb-javascript-css/" style="font-size: 10px;">mongodb javascript css</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a>
+    </div>
+  </div>
 
 
-
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
     
-    <script type="text/javascript">
-      var duoshuoQuery = {short_name:"your_id"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = 'http://static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0] 
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
+            <p class="copyright"> © 2016 
+		
+		<a href="http://daiguahub.com" target="_blank" title="xiao jian">xiao jian</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jianbaobao"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '5';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
 
 
 
 <script type="text/javascript">
-  
-  $(function(){
-
-    $('.title').hover(
-      function() {      
-        $(this).stop().animate(
-          {'marginLeft': '10px'}, 200
-        );   
-      }, 
-      function() {       
-        $(this).stop().animate({'marginLeft': '0px'}, 200);      
-      
-    });   
-
-  });
-
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
 </script>
 
 
-</body>
+  </body>
 </html>
-        
-        <div id="comment-container">
-        </div>
-    </div>
-</div>
-    </div>
-</div>
 
-
-<footer class="footer">
-    <ul class="list-inline text-center">
-        
-        
-
-        
-
-        
-
-        
-
-        
-
-    </ul>
-    
-    <p>
-        <span id="busuanzi_container_site_pv">
-            <span id="busuanzi_value_site_pv"></span>PV
-        </span>
-        <span id="busuanzi_container_site_uv">
-            <span id="busuanzi_value_site_uv"></span>UV
-        </span>
-        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
-</footer>
-
-
-
-
-</body>
-
-<script>
-    // We expose some of the variables needed by the front end
-    window.hexo_search_path = ""
-    window.hexo_root = "/"
-    window.isPost = true
-</script>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-</html>
